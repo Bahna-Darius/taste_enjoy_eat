@@ -269,12 +269,14 @@
                     Your email address will not be published. Required fields
                     are marked<span>*</span>
                   </p>
-                  <form action="">
-                    <textarea placeholder="Type your comment...."></textarea>
+                  <form method="POST">
+                      {% csrf_token %}
+                      {{ form.content }}
                     <div class="grid-3">
-                      <input type="text" placeholder="Name" />
-                      <input type="temail" placeholder="Email" />
-                      <input type="url" placeholder="Website (optional)" />
+                        <input type="hidden" name="post_id" value="{{ post.id }}">
+                      {{ form.name }}
+                      {{ form.email }}
+                      {{ form.website }}
                     </div>
                     <button class="btn btn-primary rounded">
                       Post comment

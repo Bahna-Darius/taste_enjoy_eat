@@ -15,6 +15,15 @@ def post_page(request, slug):
     posts = Post.objects.get(slug=slug)
     form = CommentForm()
 
+    if request.POST:
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid:
+            comment = comment_form.save(commit=False)
+            postid = request.POST.get('post_id')
+            post = Post.objects.get(id=postid)
+            comment.post = post
+            comment.save()
+
     if posts.view_count is None:
         posts.view_count = 1
 
@@ -29,4 +38,3 @@ def post_page(request, slug):
     }
 
     return render(request, 'app/post.html', context)
-
