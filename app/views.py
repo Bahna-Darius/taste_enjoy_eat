@@ -10,7 +10,17 @@ def index(request):
 
 
 def post_page(request, slug):
+    # To update the URL based on the title blog.
     posts = Post.objects.get(slug=slug)
+
+    if posts.view_count is None:
+        posts.view_count = 1
+
+    # Increment the view_count each time a blog title is accessed.
+    else:
+        posts.view_count = posts.view_count + 1
+    posts.save()
+
     context = {
         'post': posts
     }
