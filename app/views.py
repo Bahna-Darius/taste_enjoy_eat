@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from app.models import Post
+from app.forms import CommentForm
 
 
 def index(request):
@@ -12,6 +13,7 @@ def index(request):
 def post_page(request, slug):
     # To update the URL based on the title blog.
     posts = Post.objects.get(slug=slug)
+    form = CommentForm()
 
     if posts.view_count is None:
         posts.view_count = 1
@@ -22,7 +24,8 @@ def post_page(request, slug):
     posts.save()
 
     context = {
-        'post': posts
+        'post': posts,
+        'form': form
     }
 
     return render(request, 'app/post.html', context)
