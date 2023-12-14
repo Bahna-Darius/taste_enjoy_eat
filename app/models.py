@@ -16,6 +16,7 @@ class Tag(models.Model):
         return super(Tag, self).save(*args, **kwargs)
 
     # to return to the Admin Panel, change from Object Class to string
+    # string representation
     def __str__(self):
         return self.name
 
@@ -39,3 +40,9 @@ class Comments(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     # nuull=True / The user can leave a comment even when not logged in.
+    replay = models.ForeignKey('self', on_delete=models.DO_NOTHING, null=True, blank=True,
+                               related_name='replies')
+    # self is used to create a reply to a comment.
+    # blank=True / The user can leave a comment even when not logged in.
+    # related_name='replies' / to create a reply to a comment.
+

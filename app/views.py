@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from app.models import Post
+from app.models import Post, Comments
 from app.forms import CommentForm
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 
 def index(request):
@@ -14,6 +16,7 @@ def post_page(request, slug):
     # To update the URL based on the title blog.
     posts = Post.objects.get(slug=slug)
     form = CommentForm()
+    comments = Comments.objects.filter(post=posts)
 
     if request.POST:
         comment_form = CommentForm(request.POST)
@@ -23,6 +26,8 @@ def post_page(request, slug):
             post = Post.objects.get(id=postid)
             comment.post = post
             comment.save()
+            return HttpResponseRedirect(reverse(viewname='post_page', kwargs={'slug': slug}
+                                                ))
 
     if posts.view_count is None:
         posts.view_count = 1
@@ -34,7 +39,8 @@ def post_page(request, slug):
 
     context = {
         'post': posts,
-        'form': form
+        'form': form,
+        'comments': comments
     }
 
     return render(request, 'app/post.html', context)
