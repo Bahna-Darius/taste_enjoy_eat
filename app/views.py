@@ -15,19 +15,34 @@ def index(request):
 def post_page(request, slug):
     # To update the URL based on the title blog.
     posts = Post.objects.get(slug=slug)
+    comments = Comments.objects.filter(post=posts, parent=None)
+    # this form to add comments and replies.
     form = CommentForm()
-    comments = Comments.objects.filter(post=posts)
 
     if request.POST:
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid:
-            comment = comment_form.save(commit=False)
-            postid = request.POST.get('post_id')
-            post = Post.objects.get(id=postid)
-            comment.post = post
-            comment.save()
-            return HttpResponseRedirect(reverse(viewname='post_page', kwargs={'slug': slug}
-                                                ))
+            parent_obj = None
+            # If the comment is a reply to another comment.
+            # The parent is the id of the comment being replied to.
+            if request.POST.get('parent'):
+                parent = request.POST.get('parent')
+                parent_obj = Comments.objects.get(id=parent)
+                if parent_obj:
+                    comment_replay = comment_form.save(commit=False)
+                    comment_replay.parent = parent_obj
+                    comment_replay.post = posts
+                    comment_replay.save()
+                    return HttpResponseRedirect(reverse(viewname='post_page', kwargs={'slug': slug}
+                                                        ))
+            else:
+                comment = comment_form.save(commit=False)
+                postid = request.POST.get('post_id')
+                post = Post.objects.get(id=postid)
+                comment.post = post
+                comment.save()
+                return HttpResponseRedirect(reverse(viewname='post_page', kwargs={'slug': slug}
+                                                    ))
 
     if posts.view_count is None:
         posts.view_count = 1
