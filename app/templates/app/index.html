@@ -19,16 +19,13 @@
           </div>
           <div class="newsletter">
             <form method="POST">
-              <input
-                type="email"
-                name="email"
-                maxlength="100"
-                placeholder="Enter your email"
-                required=""
-                id="id_email"
-              />
+                {% csrf_token %}
+                {{ subscribe_form }}
               <button class="btn btn-primary">Subscribe</button>
             </form>
+              {% if subscribe_successful %}
+                <p class="text-success">You have successfully subscribed to our newsletter.</p>
+                {% endif %}
           </div>
         </center>
       </div>
