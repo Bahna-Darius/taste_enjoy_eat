@@ -65,13 +65,13 @@
         <h1 class="sec-title">Top blogs</h1>
         <div class="grid-3">
 
-            {% for post in posts %}
+            {% for post in top_posts %}
           <!-- card -->
           <a href="{% url 'post_page' post.slug %}">
             <div class="card">
               <div class="post-img">
                 <img src="{{ post.image.url }}" alt="" />
-                <div class="tag">Tag name</div>
+                <div class="tag">{{ post.tags.all.0.name }}</div>
               </div>
               <div class="card-content">
                 <h3>
@@ -105,13 +105,13 @@
         <h1 class="sec-title">New blogs</h1>
         <div class="grid-3">
 
-            {% for post in posts %}
+            {% for post in recent_posts %}
           <!-- card -->
           <a href="{% url 'post_page' post.slug %}">
             <div class="card">
               <div class="post-img">
                 <img src="{{ post.image.url }}" alt="" />
-                <div class="tag">Tag name</div>
+                <div class="tag">{{ post.tags.all.0.name }}</div>
               </div>
               <div class="card-content">
                 <h3>
