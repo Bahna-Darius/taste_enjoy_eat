@@ -43,10 +43,10 @@
                         </h3>
                         <div class="author">
                           <div class="profile-pic">
-                            <img src="../images/author.svg" alt="" />
+                            <img src="{{ post.author.profile.profile_image.url }}" alt="" />
                           </div>
                           <div class="details">
-                            <p>Author name</p>
+                            <p>{{ post.author.first_name }}</p>
                             <small>{{ post.last_updated|date }}2</small>
                           </div>
                         </div>
@@ -76,11 +76,11 @@
                         </h3>
                         <div class="author">
                           <div class="profile-pic">
-                            <img src="../images/author.svg" alt="" />
+                            <img src="{{ post.author.profile.profile_image.url }}" alt="" />
                           </div>
                           <div class="details">
-                            <p>Author name</p>
-                            <small>{{ post.last_updated }}</small>
+                            <p>{{ post.author.first_name }}</p>
+                            <small>{{ post.last_updated|date }}</small>
                           </div>
                         </div>
                       </div>

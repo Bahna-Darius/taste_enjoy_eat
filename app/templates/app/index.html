@@ -76,14 +76,14 @@
                   {{ post.title }}
                 </h3>
                 <div class="author">
-                  <div class="profile-pic">
-                    <img src="images/author.svg" alt="" />
-                  </div>
-                  <div class="details">
-                    <p>Author name</p>
-                    <small>{{ post.last_updated|date }}</small>
-                  </div>
-                </div>
+                          <div class="profile-pic">
+                            <img src="{{ post.author.profile.profile_image.url }}" alt="" />
+                          </div>
+                          <div class="details">
+                            <p>{{ post.author.first_name }}</p>
+                            <small>{{ post.last_updated|date }}2</small>
+                          </div>
+                        </div>
               </div>
             </div>
           </a>
@@ -115,15 +115,15 @@
                 <h3>
                     {{ post.title }}
                 </h3>
-                <div class="author">
-                  <div class="profile-pic">
-                    <img src="images/author.svg" alt="" />
-                  </div>
-                  <div class="details">
-                    <p>Author name</p>
-                    <small>{{ post.last_updated|date }}</small>
-                  </div>
-                </div>
+                  <div class="author">
+                          <div class="profile-pic">
+                            <img src="{{ post.author.profile.profile_image.url }}" alt="" />
+                          </div>
+                          <div class="details">
+                            <p>{{ post.author.first_name }}</p>
+                            <small>{{ post.last_updated|date }}2</small>
+                          </div>
+                        </div>
               </div>
             </div>
           </a>
