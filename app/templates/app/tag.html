@@ -54,6 +54,9 @@
                     </div>
                   </a>
                   <!-- card end-->
+                        {% empty %}
+                            {#  Ist for empty, show a message #}
+                            <p>No top posts</p>
                     {% endfor %}
                 </div>
               </div>
@@ -87,6 +90,9 @@
                     </div>
                   </a>
                   <!-- card end-->
+                        {% empty %}
+                            {#  Ist for empty, show a message #}
+                            <p>No recent posts</p>
                     {% endfor %}
                 </div>
                 <center>

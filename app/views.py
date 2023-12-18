@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from app.models import Post, Comments, Tag
+from app.models import Post, Comments, Tag, Profile
 from app.forms import CommentForm, SubscribeForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.models import User
+from django.db.models import Count
 
 
 def index(request):
@@ -98,3 +100,19 @@ def tag_page(request, slug):
     }
 
     return render(request, 'app/tag.html', context)
+
+
+def author_page(request, slug):
+    profile = Profile.objects.get(slug=slug)
+    top_posts = Post.objects.filter(author=profile.user).order_by('-view_count')[0:2]
+    recent_posts = Post.objects.filter(author=profile.user).order_by('-last_updated')[0:2]
+    top_authors = User.objects.annotate(number=Count('post')).order_by('number')
+
+    context = {
+        'profile': profile,
+        'top_posts': top_posts,
+        'recent_posts': recent_posts,
+        'top_authors': top_authors
+    }
+
+    return render(request, 'app/author.html', context)
