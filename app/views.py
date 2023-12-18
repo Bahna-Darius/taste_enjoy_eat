@@ -116,3 +116,18 @@ def author_page(request, slug):
     }
 
     return render(request, 'app/author.html', context)
+
+
+def search_post(request):
+    search_query = ''   # To display the search query in the search results page.
+
+    if request.GET.get('q'):    # q is the name of the input field in the search form.
+        search_query = request.GET.get('q')
+    posts = Post.objects.filter(title__icontains=search_query)
+
+    context = {
+        'posts': posts,
+        'search_query': search_query
+    }
+
+    return render(request, 'app/search.html', context)

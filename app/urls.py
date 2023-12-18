@@ -6,5 +6,6 @@ urlpatterns = [
        path('', views.index, name='home_page'),
        path('tag/<slug:slug>', views.tag_page, name='tag_page'),
        path('author/<slug:slug>', views.author_page, name='author_page'),
+       path('search/', views.search_post, name='search'),
 ]
 
