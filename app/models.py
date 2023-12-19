@@ -24,6 +24,9 @@ class Subscribe(models.Model):
     email = models.EmailField(max_length=100)
     date = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.email
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=100)
@@ -54,6 +57,9 @@ class Post(models.Model):
     is_featured = models.BooleanField(default=False)    # to show recommended posts
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
+    def __str__(self):
+        return self.title
+
 
 class Comments(models.Model):
     content = models.TextField()
@@ -69,6 +75,9 @@ class Comments(models.Model):
     # self is used to create a reply to a comment.
     # blank=True / The user can leave a comment even when not logged in.
     # related_name='replies' / to create a reply to a comment.
+
+    def __str__(self):
+        return self.content
 
 
 class WebsiteMeta(models.Model):    # WebsiteMeta is for dynamic website

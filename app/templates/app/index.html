@@ -26,16 +26,18 @@
             </p>
                 {% endif %}
           </div>
-          <div class="newsletter">
-            <form method="POST">
+        <div class="newsletter">
+            {% if request.session.subscribe_successful == None %}
+                <form method="POST">
                 {% csrf_token %}
                 {{ subscribe_form }}
-              <button class="btn btn-primary">Subscribe</button>
-            </form>
-              {% if subscribe_successful %}
-                <p class="text-success">You have successfully subscribed to our newsletter.</p>
-                {% endif %}
-          </div>
+                <button class="btn btn-primary">Subscribe</button>
+                </form>
+            {% endif %}
+            {% if subscribe_successful %}
+                <br><p>You have successfully subscribed to our newsletter</p>
+            {% endif %}
+        </div>
         </center>
       </div>
     </main>
