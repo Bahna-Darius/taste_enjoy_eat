@@ -37,7 +37,7 @@ class Tag(models.Model):
             self.slug = slugify(self.name)
         return super(Tag, self).save(*args, **kwargs)
 
-    # to return to the Admin Panel, change from Object Class to string
+    # to return to the Admin Panel, change from Object Class to string reading
     # string representation
     def __str__(self):
         return self.name
@@ -70,3 +70,11 @@ class Comments(models.Model):
     # blank=True / The user can leave a comment even when not logged in.
     # related_name='replies' / to create a reply to a comment.
 
+
+class WebsiteMeta(models.Model):    # WebsiteMeta is for dynamic website
+    title = models.CharField(max_length=200)
+    description = models.CharField(max_length=500)
+    about = models.TextField()
+
+    def __str__(self):
+        return self.title

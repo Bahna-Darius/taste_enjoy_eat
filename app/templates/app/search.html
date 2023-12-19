@@ -28,7 +28,7 @@
         <div class="grid">
             {% for post in posts %}
           <!-- card -->
-          <a href="#">
+          <a href="{% url 'post_page' post.slug %}">
             <div class="card">
               <div class="post-img">
                 <img src="{{ post.image.url }}" alt="" />

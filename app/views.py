@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from app.models import Post, Comments, Tag, Profile
+from app.models import Post, Comments, Tag, Profile, WebsiteMeta
 from app.forms import CommentForm, SubscribeForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -14,6 +14,10 @@ def index(request):
     featured_blog = Post.objects.filter(is_featured=True)
     subscribe_form = SubscribeForm()
     subscribe_successful = None  # To display a message if the user subscribes successfully.
+    website_info = None
+
+    if WebsiteMeta.objects.all().exists():
+        website_info = WebsiteMeta.objects.all()[0]
 
     if featured_blog:
         featured_blog = featured_blog[0]
@@ -31,7 +35,8 @@ def index(request):
         'recent_posts': recent_posts,
         'subscribe_form': subscribe_form,
         'subscribe_successful': subscribe_successful,
-        'featured_blog': featured_blog
+        'featured_blog': featured_blog,
+        'website_info': website_info
     }
 
     return render(request, 'app/index.html', context)
