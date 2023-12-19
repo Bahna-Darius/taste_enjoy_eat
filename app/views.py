@@ -12,7 +12,7 @@ def index(request):
     top_posts = Post.objects.all().order_by('-view_count')[0:3]
     recent_posts = Post.objects.all().order_by('-last_updated')[0:3]
     featured_blog = Post.objects.filter(is_featured=True)
-    subscribe_form = SubscribeForm()
+    subscribe_form = SubscribeForm(request.POST)
     subscribe_successful = None  # To display a message if the user subscribes successfully.
     website_info = None
 
@@ -25,9 +25,11 @@ def index(request):
     if request.POST:
         subscribe_form = SubscribeForm(request.POST)
         if subscribe_form.is_valid():
-            subscribe_form.save()
-            subscribe_successful = 'Thank you for subscribing!'
-            subscribe_form = SubscribeForm()
+            if not request.session.get('subscribe_successful', False):
+                subscribe_form.save()
+                request.session['subscribe_successful'] = True
+                subscribe_successful = 'Thank you for subscribing!'
+                subscribe_form = SubscribeForm()
 
     context = {
         'posts': posts,
