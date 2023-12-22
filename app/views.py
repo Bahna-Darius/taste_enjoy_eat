@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from app.models import Post, Comments, Tag, Profile, WebsiteMeta
-from app.forms import CommentForm, SubscribeForm
+from app.forms import CommentForm, SubscribeForm, NewUserForm
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.db.models import Count
+from django.contrib.auth import login
 
 
 def index(request):
@@ -151,3 +152,21 @@ def about(request):
     }
 
     return render(request, 'app/about.html', context)
+
+
+def register_user(request):
+    form = NewUserForm()
+
+    if request.method == 'POST':
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()  # to save the user in the database.
+            login(request, user)    # to login the user after registration.
+            return redirect('/')    # to redirect the user to the home page.
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'registration/registration.html', context)
+
