@@ -230,3 +230,13 @@ def all_posts(request):
     }
 
     return render(request, 'app/all_posts.html', context)
+
+
+def all_liked(request):
+    all_liked_posts = Post.objects.filter(likes=request.user)
+
+    context = {
+        'all_liked_posts': all_liked_posts
+    }
+
+    return render(request, 'app/all_liked_posts.html', context)
