@@ -58,6 +58,13 @@ def post_page(request, slug):
         bookmarked = True
     is_bookmarked = bookmarked
 
+    # Like logic
+    liked = False
+    if posts.likes.filter(id=request.user.id).exists():  # to check if the user is in the likes list.
+        liked = True
+    number_of_likes = posts.number_of_likes()
+    post_is_liked = liked
+
     if request.POST:
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid:
@@ -95,7 +102,9 @@ def post_page(request, slug):
         'post': posts,
         'form': form,
         'comments': comments,
-        'is_bookmarked': is_bookmarked
+        'is_bookmarked': is_bookmarked,
+        'post_is_liked': post_is_liked,
+        'number_of_likes': number_of_likes
     }
 
     return render(request, 'app/post.html', context)
@@ -186,6 +195,18 @@ def bookmark_post(request, slug):
         post.bookmark.remove(request.user)  # to remove the bookmark from the bookmark list.
     else:
         post.bookmark.add(request.user)  # to add the user to the bookmark list.
+
+    return HttpResponseRedirect(reverse(viewname='post_page', args=[str(slug)]
+                                        ))
+
+
+def like_post(request, slug):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+
+    if post.likes.filter(id=request.user.id).exists():  # to check if the user is in the likes list.
+        post.likes.remove(request.user)  # to remove the like from the likes list.
+    else:
+        post.likes.add(request.user)  # to add the user to the likes list.
 
     return HttpResponseRedirect(reverse(viewname='post_page', args=[str(slug)]
                                         ))

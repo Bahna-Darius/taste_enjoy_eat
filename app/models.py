@@ -56,7 +56,11 @@ class Post(models.Model):
     view_count = models.IntegerField(null=True, blank=True)
     is_featured = models.BooleanField(default=False)    # to show recommended posts
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    bookmark = models.ManyToManyField(User, related_name='bookmark', default=None, blank=True)
+    bookmark = models.ManyToManyField(User, related_name='bookmarks', default=None, blank=True)
+    likes = models.ManyToManyField(User, related_name='post_like', default=None, blank=True)
+
+    def number_of_likes(self):  # to count the number of likes for each post
+        return self.likes.count()
 
     def __str__(self):
         return self.title
