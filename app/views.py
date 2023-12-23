@@ -220,3 +220,13 @@ def all_bookmarked_posts(request):
     }
 
     return render(request, 'app/all_bookmarked_posts.html', context)
+
+
+def all_posts(request):
+    all_posts = Post.objects.all()
+
+    context = {
+        'all_posts': all_posts
+    }
+
+    return render(request, 'app/all_posts.html', context)
