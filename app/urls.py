@@ -11,5 +11,7 @@ urlpatterns = [
        path('accounts/register/', views.register_user, name='register'),
        path('bookmark/<slug:slug>', views.bookmark_post, name='bookmark_post'),
        path('like_post/<slug:slug>', views.like_post, name='like_post'),
+       path('all_bookmarked_posts/', views.all_bookmarked_posts, name='all_bookmarked_posts'),
+       path('all_posts/', views.all_posts, name='all_posts'),
 ]
 

@@ -210,3 +210,13 @@ def like_post(request, slug):
 
     return HttpResponseRedirect(reverse(viewname='post_page', args=[str(slug)]
                                         ))
+
+
+def all_bookmarked_posts(request):
+    all_bookmarked = Post.objects.filter(bookmark=request.user)
+
+    context = {
+        'all_bookmarked': all_bookmarked
+    }
+
+    return render(request, 'app/all_bookmarked_posts.html', context)
