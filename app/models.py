@@ -56,6 +56,7 @@ class Post(models.Model):
     view_count = models.IntegerField(null=True, blank=True)
     is_featured = models.BooleanField(default=False)    # to show recommended posts
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    bookmark = models.ManyToManyField(User, related_name='bookmark', default=None, blank=True)
 
     def __str__(self):
         return self.title

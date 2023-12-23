@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from app.models import Post, Comments, Tag, Profile, WebsiteMeta
 from app.forms import CommentForm, SubscribeForm, NewUserForm
 from django.http import HttpResponseRedirect
@@ -52,6 +52,12 @@ def post_page(request, slug):
     # this form to add comments and replies.
     form = CommentForm()
 
+    # Bookmark logic
+    bookmarked = False
+    if posts.bookmark.filter(id=request.user.id).exists():  # to check if the user is in the bookmark list.
+        bookmarked = True
+    is_bookmarked = bookmarked
+
     if request.POST:
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid:
@@ -88,7 +94,8 @@ def post_page(request, slug):
     context = {
         'post': posts,
         'form': form,
-        'comments': comments
+        'comments': comments,
+        'is_bookmarked': is_bookmarked
     }
 
     return render(request, 'app/post.html', context)
@@ -127,9 +134,9 @@ def author_page(request, slug):
 
 
 def search_post(request):
-    search_query = ''   # To display the search query in the search results page.
+    search_query = ''  # To display the search query in the search results page.
 
-    if request.GET.get('q'):    # q is the name of the input field in the search form.
+    if request.GET.get('q'):  # q is the name of the input field in the search form.
         search_query = request.GET.get('q')
     posts = Post.objects.filter(title__icontains=search_query)
 
@@ -161,8 +168,8 @@ def register_user(request):
         form = NewUserForm(request.POST)
         if form.is_valid():
             user = form.save()  # to save the user in the database.
-            login(request, user)    # to login the user after registration.
-            return redirect('/')    # to redirect the user to the home page.
+            login(request, user)  # to login the user after registration.
+            return redirect('/')  # to redirect the user to the home page.
 
     context = {
         'form': form
@@ -170,3 +177,15 @@ def register_user(request):
 
     return render(request, 'registration/registration.html', context)
 
+
+def bookmark_post(request, slug):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))  # get_object_or_404 is used to get the post object.
+    # when the post is not found, it will return 404 error.
+
+    if post.bookmark.filter(id=request.user.id).exists():  # to check if the user is in the bookmark list.
+        post.bookmark.remove(request.user)  # to remove the bookmark from the bookmark list.
+    else:
+        post.bookmark.add(request.user)  # to add the user to the bookmark list.
+
+    return HttpResponseRedirect(reverse(viewname='post_page', args=[str(slug)]
+                                        ))
