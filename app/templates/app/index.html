@@ -58,7 +58,7 @@
             </h1>
             <p class="des">
                 {#  truncatechars is for  show only 200 characters #}
-              {{ featured_blog.content|truncatechars:200 }}
+              {{ featured_blog.content|striptags|truncatechars:200 }}
             </p>
             <a class="learn" href="#"
               >Learn more <span class="material-icons"> trending_flat </span></a

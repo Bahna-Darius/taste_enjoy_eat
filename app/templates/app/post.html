@@ -1,10 +1,9 @@
-{% extends 'base.html'%}
-{% block  title %}Blog | The Super Blog {% endblock title%}
+{% extends 'base.html' %}
+{% block title %}Blog | The Super Blog{% endblock title %}
 {% load static %}
 
-    {% block content %}
-
-    <div class="container">
+{% block content %}
+      <div class="container">
         <div class="layout">
           <!-- left layout -->
           <div class="left">
@@ -23,7 +22,7 @@
             <center>
               <div class="typo">
                 <h1 class="title blog-title">
-                    {{post.title}}
+                  {{post.title}}
                 </h1>
                 <div class="timeline">
                   <div class="track">
@@ -32,34 +31,30 @@
                   </div>
                   <div class="track">
                     <i class="uil uil-users-alt"></i>
-                            {# pluralize is a Filter for pl. #}
-                    <p class="view-count">{{post.view_count}} view{{ post.view_count|pluralize}}</p>
+                    <p class="view-count">{{post.view_count}} view{{post.view_count|pluralize}}</p>
                   </div>
                   <div class="track">
-                  {% if user.is_authenticated %}
+                    {% if user.is_authenticated %}
                     <form action="{% url 'bookmark_post' post.slug %}" method="POST">
-                        {% csrf_token %}
-                         <input type="hidden" name="post_id" value="{{ post.id }}">
-                        {% if is_bookmarked %}
-                        <button type="submit" class="btn btn-info">
-                            <i class="fa-solid fa-bookmark"></i>
-                            <p class="bookmark">Remove Bookmark</p>
-                        </button>
-                        {% else %}
+                      {% csrf_token %}
+                      <input type="hidden" name="post_id" value="{{post.id}}">
+                      {% if is_bookmarked %}
+                      <button type="submit" class="btn btn-info">
+                        <i class="fa-solid fa-bookmark"></i>
+                        <p class="bookmark">Remove Bookmark</p>
+                      </button>
+                      {% else %}
                       <button type="submit" class="btn btn-info">
                         <i class="uil uil-bookmark-full"></i>
                         <p class="bookmark">Bookmark</p>
-                        <!-- REMOVE BOOKMARK
-                          <i class="fa-solid fa-bookmark"></i> -->
                       </button>
-                        {% endif %}
+                      {% endif %}
                     </form>
-                      {% else %}
-                        <a class="track" href="{% url 'login' %}">
-                            <i class="fa-solid fa-bookmark"></i>
-                            <p class="bookmark">Remove Bookmark</p>
-                        </a><br>
-
+                    {% else %}
+                    <a class="track" href="{% url 'login' %}">
+                      <i class="uil uil-bookmark-full"></i>
+                      <p class="bookmark">Bookmark</p>
+                    </a><br>
                     {% endif %}
                   </div>
                 </div>
@@ -74,13 +69,12 @@
                   </div>
                   <div class="blog-post-content">
                     <p>
-                     {{post.content|safe}}
+                      {{post.content|safe}}
                     </p>
                     <div class="blog-tags">
-                        {% for tag in post.tags.all %}
-                      <a href="{% url 'tag_page' tag.slug %}" class="tag">{{ tag.name }}</a>
-                        {% endfor %}
-
+                    {% for tag in post.tags.all %}
+                      <a href="{% url 'tag_page' tag.slug %}" class="tag">{{tag.name}}</a>
+                    {% endfor %}
                     </div>
                     <div class="social-share">
                       <div class="reactions">
@@ -128,7 +122,7 @@
                         </div>
                       </div>
                     </div>
-                  {% for comment in comments %}
+                    {% for comment in comments %}
                     <!-- comments -->
                     <div class="user-comment">
                       <div class="author">
@@ -136,15 +130,15 @@
                           <img src="{% static 'images/author.svg' %}" alt="" />
                         </div>
                         <div class="details">
-                          <p>{{ comment.name }}</p>
-                          <small>{{ comment.date|date }}</small>
+                          <p>{{comment.name}}</p>
+                          <small>{{comment.date|date}}</small>
                         </div>
                       </div>
                       <div class="comment-sec-main">
                         <div class="comment-sec">
                           <div class="comment">
                             <p>
-                              {{ comment.content }}
+                              {{comment.content}}
                             </p>
                           </div>
                           <div class="reply">
@@ -157,14 +151,14 @@
                               are marked<span>*</span>
                             </p>
                             <form method="POST">
-                                {% csrf_token %}
-                                {{ form.content }}
+                              {% csrf_token %}
+                              {{form.content}}
                               <div class="grid-3">
-                                    <input type="hidden" name="post_id" value="{{ post.id }}">
-                                    <input type="hidden" name="parent" value="{{ comment.id }}">
-                                    {{ form.name }}
-                                    {{ form.email }}
-                                    {{ form.website }}
+                                <input type="hidden" name="post_id" value="{{post.id}}">
+                                <input type="hidden" name="parent" value="{{comment.id}}">
+                                {{form.name}}
+                                {{form.email}}
+                                {{form.website}}
                               </div>
 
                               <button class="btn btn-primary rounded">
@@ -175,29 +169,30 @@
 
                         </div>
 
-                          {% for reply in comment.replies.all %}
+                        {% for reply in comment.replies.all %}
                         <div class="public-reply">
                           <div class="author">
                             <div class="profile-pic">
                               <img src="{% static 'images/author.svg' %}" alt="" />
                             </div>
                             <div class="details">
-                              <p>{{ reply.name }}</p>
-                              <small>{{ reply.data|date }}</small>
+                              <p>{{reply.name}}</p>
+                              <small>{{reply.date|date}}</small>
                             </div>
                           </div>
                           <div class="comment">
                             <p>
-                              {{ reply.content }}
+                              {{reply.content}}
                             </p>
                           </div>
                         </div>
-                            {% endfor %}
+                        {% endfor %}
+
 
 
                       </div>
                     </div>
-                    <!-- comments end -->
+                    <!-- Comment end -->
                     {% endfor %}
                   </div>
                 </div>
@@ -208,13 +203,13 @@
                     are marked<span>*</span>
                   </p>
                   <form method="POST">
-                      {% csrf_token %}
-                      {{ form.content }}
+                    {% csrf_token %}
+                    {{form.content}}
                     <div class="grid-3">
-                        <input type="hidden" name="post_id" value="{{ post.id }}">
-                      {{ form.name }}
-                      {{ form.email }}
-                      {{ form.website }}
+                      <input type="hidden" name="post_id" value="{{post.id}}">
+                      {{form.name}}
+                      {{form.email}}
+                      {{form.website}}
                     </div>
                     <button class="btn btn-primary rounded">
                       Post comment
@@ -230,17 +225,14 @@
           <div class="right">
             <div class="block">
               <h2 class="title2">Most recent</h2>
-                {% for post in recent_posts %}
-
-
-
+              {% for post in recent_posts %}
               <div class="recent-post">
                 <div class="rounded-img">
-                  <img src="{{ post.image.url }}" alt="" />
+                  <img src="{{post.image.url}}" alt="" />
                 </div>
                 <div class="recent-content">
                   <h3>
-                    {{ post.title }}
+                    {{post.title}}
                   </h3>
                   <a class="learn" href="{% url 'post_page' post.slug %}"
                     >Learn more
@@ -248,52 +240,49 @@
                   >
                 </div>
               </div>
-                {% endfor %}
+              {% endfor %}
             </div>
 
             <div class="block r-blog">
               <h2 class="title2">Related Blogs</h2>
-                {% for post in related_posts %}
-
+              {% for post in related_posts %}
               <!-- card -->
               <a href="#">
                 <div class="card">
                   <div class="post-img">
-                    <img src="{{ post.image.url }}" alt="" />
-                    <div class="tag">{{ post.tags.all.0.name }}</div>
+                    <img src="{{post.image.url}}" alt="" />
+                    <div class="tag">{{post.tags.all.0.name}}</div>
                   </div>
                   <div class="card-content">
                     <h3>
-                      {{ post.title }}
+                      {{post.title}}
                     </h3>
                     <div class="author">
                       <div class="profile-pic">
-                        <img src="{{ post.author.profile.profile_image.url }}" alt=""/>
+                        <img src="{{post.author.profile.profile_image.url}}" alt="" />
                       </div>
                       <div class="details">
-                        <p>{{ post.author.first_name }}</p>
-                        <small>{{ post.last_updated|date }}</small>
+                        <p>{{post.author.first_name}}</p>
+                        <small>{{post.last_updated|date}}</small>
                       </div>
                     </div>
                   </div>
                 </div>
               </a>
               <!-- card end-->
-                {% endfor %}
+              {% endfor %}
 
             </div>
             <div class="block">
-              <h2 class="title2">Author</h2>
-
-             {% for author in top_authors %}
-
+              <h2 class="title2">Top Author</h2>
+              {% for author in top_authors %}
               <div class="recent-post">
                 <div class="rounded-img">
-                  <img src="{{ author.profile.profile_image.url }}" alt="" />
+                  <img src="{{author.profile.profile_image.url}}" alt="" />
                 </div>
                 <div class="recent-content">
                   <h3>
-                    {{ author.first_name }}
+                    {{author.first_name}}
                   </h3>
                   <a class="learn" href="{% url 'author_page' author.profile.slug %}"
                     >Learn more
@@ -301,15 +290,14 @@
                   >
                 </div>
               </div>
-                {% endfor %}
-
+              {% endfor %}
             </div>
             <div class="block">
               <h2 class="title2">Top Tags</h2>
               <div class="blog-tags">
-                  {% for tag in tags %}
-                <a class="tag" href="{% url 'tag_page' tag.slug %}">{{ tag.name }}</a>
-                  {% endfor %}
+                {% for tag in tags %}
+                <a class="tag" href="{% url 'tag_page' tag.slug %}">{{tag.name}}</a>
+                {% endfor %}
               </div>
             </div>
           </div>
@@ -317,4 +305,5 @@
         </div>
       </div>
 
-    {% endblock content %}
+
+      {% endblock content %}
