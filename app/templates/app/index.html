@@ -60,7 +60,7 @@
                 {#  truncatechars is for  show only 200 characters #}
               {{ featured_blog.content|striptags|truncatechars:200 }}
             </p>
-            <a class="learn" href="#"
+            <a class="learn" href="{% url 'post_page' featured_blog.slug  %}"
               >Learn more <span class="material-icons"> trending_flat </span></a
             >
           </div>
