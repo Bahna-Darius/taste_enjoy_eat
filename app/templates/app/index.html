@@ -26,18 +26,22 @@
             </p>
                 {% endif %}
           </div>
+
         <div class="newsletter">
             {% if request.session.subscribe_successful == None %}
+            {% if request.user.is_authenticated and not request.user.subscribe_set.all %}
                 <form method="POST">
                 {% csrf_token %}
                 {{ subscribe_form }}
                 <button class="btn btn-primary">Subscribe</button>
                 </form>
             {% endif %}
+            {% endif %}
             {% if subscribe_successful %}
                 <br><p>You have successfully subscribed to our newsletter</p>
             {% endif %}
         </div>
+
         </center>
       </div>
     </main>
@@ -51,7 +55,7 @@
           </div>
           <div class="post-content">
             <div class="cetagory">
-              <p>Category name</p>
+              <p>Recommended</p>
             </div>
             <h1>
               {{ featured_blog.title }}
