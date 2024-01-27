@@ -107,19 +107,16 @@
                       </div>
                       <div class="share">
                         <div class="social">
-                          <a href="#">
-                            <i class="fa-brands fa-facebook-f"></i>
-                          </a>
-                          <a href="#">
-                            <i class="fa-brands fa-instagram"></i>
-                          </a>
-                          <a href="#">
-                            <i class="fa-brands fa-linkedin-in"></i>
-                          </a>
-                          <a href="#">
-                            <i class="fa-brands fa-twitter"></i>
-                          </a>
-                        </div>
+                            <a href="https://www.instagram.com/taste_enjoy_eat/?hl=ro" target="_blank">
+                              <i class="fa-brands fa-instagram"></i>
+                            </a>
+                            <a href="https://www.tiktok.com/@tasteenjoyeat?lang=en" target="_blank">
+                              <i class="fa-brands fa-tiktok"></i>
+                            </a>
+                            <a href="#">
+                              <i class="fa-brands fa-youtube"></i>
+                            </a>
+                          </div>
                       </div>
                     </div>
                     {% for comment in comments %}
@@ -247,7 +244,7 @@
               <h2 class="title2">Related Blogs</h2>
               {% for post in related_posts %}
               <!-- card -->
-              <a href="#">
+              <a class="learn" href="{% url 'post_page' post.slug %}">
                 <div class="card">
                   <div class="post-img">
                     <img src="{{post.image.url}}" alt="" />
@@ -274,7 +271,7 @@
 
             </div>
             <div class="block">
-              <h2 class="title2">Top Author</h2>
+              <h2 class="title2">Author</h2>
               {% for author in top_authors %}
               <div class="recent-post">
                 <div class="rounded-img">

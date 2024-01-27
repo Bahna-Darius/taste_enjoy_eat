@@ -29,13 +29,11 @@
 
         <div class="newsletter">
             {% if request.session.subscribe_successful == None %}
-            {% if request.user.is_authenticated and not request.user.subscribe_set.all %}
                 <form method="POST">
                 {% csrf_token %}
                 {{ subscribe_form }}
                 <button class="btn btn-primary">Subscribe</button>
                 </form>
-            {% endif %}
             {% endif %}
             {% if subscribe_successful %}
                 <br><p>You have successfully subscribed to our newsletter</p>
@@ -96,7 +94,7 @@
                           </div>
                           <div class="details">
                             <p>{{ post.author.first_name }}</p>
-                            <small>{{ post.last_updated|date }}2</small>
+                            <small>{{post.last_updated|date}}</small>
                           </div>
                         </div>
               </div>
