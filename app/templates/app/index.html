@@ -28,6 +28,7 @@
           </div>
 
         <div class="newsletter">
+        {% if user.is_authenticated %}
             {% if request.session.subscribe_successful == None %}
                 <form method="POST">
                 {% csrf_token %}
@@ -38,6 +39,7 @@
             {% if subscribe_successful %}
                 <br><p>You have successfully subscribed to our newsletter</p>
             {% endif %}
+        {% endif %}
         </div>
 
         </center>

@@ -97,21 +97,25 @@
               {% endif %}
           </div>
 
-          <div class="news-signup">
-            <h2>Subscribe</h2>
-              
-          <div class="newsletter">
-            {% if request.session.subscribe_successful == None %}
-                <form method="POST">
-                {% csrf_token %}
-                {{ subscribe_form }}
-                <button class="btn btn-primary">Subscribe</button>
-                </form>
-            {% endif %}
-            {% if subscribe_successful %}
-                <br><p>You have successfully subscribed to our newsletter</p>
-            {% endif %}
-          </div>
+         <div class="news-signup">
+            <div class="newsletter">
+                {% if user.is_authenticated %}
+                    {% if request.session.subscribe_successful == None %}
+                        <h2>Subscribe</h2>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ subscribe_form }}
+                            <button class="btn btn-primary">Subscribe</button>
+                        </form>
+                    {% endif %}
+                    {% if subscribe_successful %}
+                        <h2>Thank you for Subscribe</h2>
+                        <br><p>You have successfully subscribed to our newsletter</p>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+
 
           </div>
         </div>
