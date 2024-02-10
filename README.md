@@ -53,7 +53,7 @@ This project is licensed under
 
 ## Contact
 
-- Your Name: Bahna-Darius
+- My Name: Bahna-Darius
 - LinkedIn: <a href="https://www.linkedin.com/in/darius-bahn%C4%83-2224b7264/" target="_blank">
    My LinkedIn
 </a>
